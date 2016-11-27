@@ -3,4 +3,17 @@
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="detail_activity">Detail</string>
+
+    <string-array name="Cities">
+        <item>Napoli</item>
+        <item>Milano</item>
+        <item>Roma</item>
+        <item>Bologna</item>
+        <item>Torino</item>
+        <item>Venezia</item>
+        <item>Palermo</item>
+    </string-array>
+    <string name="title_activity_city">CityActivity</string>
+    <string name="title_activity_list_city">ListCityActivity</string>
+
 </resources>
