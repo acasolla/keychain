@@ -24,7 +24,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         tv.setTextSize(40);
         tv.setText(message);
 
-        //Adds the tv to the layout
+        //Adds the tv to the activity_main
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_display_message);
         layout.addView(tv);
 

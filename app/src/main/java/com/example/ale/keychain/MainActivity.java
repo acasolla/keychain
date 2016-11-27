@@ -72,4 +72,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState, persistentState);
         logger.info("onCreate");
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        logger.info("onSaveInstanceState");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        logger.info("onRestoreInstanceState");
+
+    }
 }
