@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/keychain"
+        android:src="@mipmap/ic_launcher"
         android:layout_marginTop="40dp"
         />
     <TextView
@@ -20,12 +20,6 @@
         android:textSize="18dp"
         android:textStyle="bold|italic"/>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -33,12 +27,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Username"/>
+                android:text="@string/label_username"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="username"/>
-
+                android:hint="@string/edit_message"
+                android:id="@+id/username"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,20 +41,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Password"/>
+                android:text="@string/label_password"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="password"/>
+                android:hint="@string/label_password"/>
         </LinearLayout>
-    </LinearLayout>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#FFF"
         android:layout_marginTop="5dp"
-        android:text="Login"
+        android:text="@string/button_send"
+        android:onClick="login"
         />
   </LinearLayout>
