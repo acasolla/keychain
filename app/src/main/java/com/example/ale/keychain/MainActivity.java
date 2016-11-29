@@ -3,15 +3,11 @@ package com.example.ale.keychain;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.speech.tts.TextToSpeech;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.logging.Logger;
@@ -24,19 +20,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_build:
-                logger.info("build");
+            case R.id.action_add:
+                logger.info("add");
                 return true;
 
             case R.id.action_logout:
-                logger.info("settings");
+                logger.info("logout");
                 editor.putString(LoginActivity.USERNAME_KEY,null);
                 editor.commit();
                 Intent i = new Intent(this,LoginActivity.class);

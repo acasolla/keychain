@@ -4,10 +4,10 @@
 
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
-        android:id="@+id/action_build"
-        android:icon="@mipmap/ic_build_white_24dp"
-        android:title="build"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/action_add"
+        android:icon="@mipmap/ic_launcher"
+        android:title="add"
+        app:showAsAction="always"/>
 
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_logout"
