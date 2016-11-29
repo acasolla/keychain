@@ -32,10 +32,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="second"
+        android:text="center"
+        android:id="@+id/center"
         android:layout_below="@+id/first"
         android:layout_above="@+id/bottom"
-        android:background="@drawable/back"
+        android:background="@drawable/rectangle"
         android:gravity="center"
         />
     <TextView

@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     public static final String PASSWORD_KEY = "com.example.ale.keychain.PASSWORD_KEY";
     public static final String PREFERENCE_FILE_KEY = "com.example.ale.keychain.PREFERENCE_FILE_KEY";
     private SharedPreferences sharedPref = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,32 +34,22 @@ public class LoginActivity extends AppCompatActivity {
         logger.info("storedUSername=" + storedUsername);
         if ( storedUsername != null ){
             Intent i = new Intent(this,MainActivity.class);
-            i.putExtra(LOGIN_USERNAME,storedUsername);
             startActivity(i);
         }
     }
 
     public void login(View view){
         logger.info("click login");
-
         EditText etUsername = (EditText) findViewById(R.id.username);
-        EditText etPassword = (EditText) findViewById(R.id.username);
-
+        EditText etPassword = (EditText) findViewById(R.id.password);
         String username =  etUsername.getText().toString();
         String password =  etPassword.getText().toString();
-        logger.info(String.format("username=%s password=%s",username,password));
-        if ( username == null || username.isEmpty() || password == null || password.isEmpty()){
-            logger.info("username and password are null");
-            PopupWindow w = new PopupWindow(this);
-
-            TextView t = new TextView(this);
-            t.setText("Username obbligatoria");
-           w.setContentView(t);
-            w.showAtLocation(t, Gravity.BOTTOM,10,10);
-
-
+        logger.info(String.format("username=[%s] password=[%s]",username,password));
+        if ( username == null || username.isEmpty()){
+            logger.info("username is null");
+            String error = getString(R.string.username_null);
+            etUsername.setError(error);
         }else {
-
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString(USERNAME_KEY, username);
             editor.putString(PASSWORD_KEY, password);
@@ -65,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
             logger.info("Value username=" + username);
             Intent i = new Intent(this, MainActivity.class);
-            i.putExtra(LOGIN_USERNAME, username);
+            i.putExtra(LOGIN_USERNAME,username);
             startActivity(i);
         }
 

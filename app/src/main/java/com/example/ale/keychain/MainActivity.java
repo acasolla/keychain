@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sharedPref = getSharedPreferences(LoginActivity.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
         String username = sharedPref.getString(LoginActivity.USERNAME_KEY,null);
         if ( username == null ) {
             Intent i = getIntent();
@@ -64,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
             logger.info("username from LoginActivity=" + username);
         }
 
-
+        TextView center = (TextView) findViewById(R.id.center);
+        center.setText(username);
         
 
 

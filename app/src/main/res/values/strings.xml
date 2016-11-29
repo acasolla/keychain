@@ -5,4 +5,5 @@
     <string name="detail_activity">Detail</string>
     <string name="label_username">Username</string>
     <string name="label_password">Password</string>
+    <string name="username_null">Username is mandatory!</string>
 </resources>
