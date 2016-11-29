@@ -28,8 +28,7 @@ import java.util.logging.Logger;
 
 public class CitiesFragment extends ListFragment  implements AdapterView.OnItemClickListener{
     private final static Logger logger = Logger.getLogger("Activity-CitiesFragment");
-
-    private OnSelectedCity listener;
+    public static final String SELECTED_CITY = "SELECTED_CITY";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,26 +50,15 @@ public class CitiesFragment extends ListFragment  implements AdapterView.OnItemC
         logger.info("CLICK!!!!");
         String[] cities = getResources().getStringArray(R.array.Cities);
    //     Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
-        Snackbar.make(view, "Selected city: " + cities[position], Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    //    Intent i = new Intent(this,CitiesFragment.class);
-        if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ){
-            View v = getActivity().findViewById(R.id.city_i);
-            TextView t = (TextView) v.findViewById(R.id.city);
-            t.setText(cities[position]);
-        }else {
+   //     Snackbar.make(view, "Selected city: " + cities[position], Snackbar.LENGTH_LONG)
+    //            .setAction("Action", null).show();
+    //
             Intent i = new Intent(getActivity(), CityActivity.class);
-            i.putExtra("selected.city",cities[position]);
+            i.putExtra(SELECTED_CITY,cities[position]);
             getActivity().startActivity(i);
-        }
+
 
     //    v.findViewById(R.id)
     }
-
-
-    public interface OnSelectedCity{
-        public void onSelectedCity(String city);
-    }
-
 
 }

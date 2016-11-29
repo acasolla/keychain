@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"></fragment>
         <fragment
             class="com.example.ale.keychain.fragments.CityFragment"
-            android:id="@+id/city_i"
+            android:id="@+id/city_fragment"
             android:layout_width="0dp"
             android:layout_weight=".50"
             android:layout_height="wrap_content"></fragment>

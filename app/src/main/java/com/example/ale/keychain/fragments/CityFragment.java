@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * Created by ale on 11/27/16.
  */
 
-public class CityFragment extends Fragment implements CitiesFragment.OnSelectedCity{
+public class CityFragment extends Fragment {
     private final static Logger logger = Logger.getLogger("Activity-CityFragment");
 
     @Nullable
@@ -25,8 +25,5 @@ public class CityFragment extends Fragment implements CitiesFragment.OnSelectedC
         return inflater.inflate(R.layout.fragment_city,container,false);
     }
 
-    @Override
-    public void onSelectedCity(String city) {
-        logger.info("city=" + city);
-    }
+
 }
