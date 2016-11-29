@@ -3,6 +3,7 @@ package com.example.ale.keychain;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -16,22 +17,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.example.ale.keychain.adapter.PasswordCursorAdapter;
 import com.example.ale.keychain.sql.PasswordContract;
 import com.example.ale.keychain.sql.PasswordDbHelper;
 
 import java.util.logging.Logger;
 
-public class MainActivity extends ListActivity {
-    private static final Logger logger = Logger.getLogger("Keychain-MainActivity");
+public class PasswordsActivity extends AppCompatActivity {
+    private static final Logger logger = Logger.getLogger("Keychain-PasswordsActivity");
     private SharedPreferences sharedPref = null;
     private SharedPreferences.Editor editor = null;
     private PasswordDbHelper mDbHelper;
     private SQLiteDatabase db;
-    private SimpleCursorAdapter mAdapter;
-
+    private PasswordCursorAdapter mAdapter;
+    private ListView lView;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -67,7 +70,8 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_passwords);
+        lView = (ListView) findViewById(R.id.list);
         sharedPref = getSharedPreferences(LoginActivity.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         mDbHelper = new PasswordDbHelper(this);
@@ -76,23 +80,10 @@ public class MainActivity extends ListActivity {
 
         Cursor c = mDbHelper.getPasswords(db,"nome1");
 
-        String[] fromColumns = {PasswordContract.PasswordEntry.COLUMN_NAME};
-        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
-       mAdapter = new SimpleCursorAdapter(this,
-               android.R.layout.simple_list_item_1, c,
-               fromColumns, toViews, 0);
-
-
-        String username = sharedPref.getString(LoginActivity.USERNAME_KEY,null);
-        if ( username == null ) {
-            Intent i = getIntent();
-            username = i.getStringExtra(LoginActivity.LOGIN_USERNAME);
-            logger.info("username from LoginActivity=" + username);
-        }
-
-        TextView center = (TextView) findViewById(R.id.center);
-        center.setText(username);
-
+        String[] fromColumns = {PasswordContract.PasswordEntry.COLUMN_NAME,PasswordContract.PasswordEntry.COLUMN_USERNAME};
+        int[] toViews = {R.id.line_name,R.id.line_name}; // The TextView in simple_list_item_1
+       mAdapter = new PasswordCursorAdapter(this,R.layout.password_list_item,c,0);
+        lView.setAdapter(mAdapter);
 
     }
 

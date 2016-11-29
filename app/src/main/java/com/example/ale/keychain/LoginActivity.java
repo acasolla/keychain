@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         String storedUsername = sharedPref.getString(USERNAME_KEY,null);
         logger.info("storedUSername=" + storedUsername);
         if ( storedUsername != null ){
-            Intent i = new Intent(this,MainActivity.class);
+            Intent i = new Intent(this,PasswordsActivity.class);
             startActivity(i);
         }
     }
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.commit();
 
             logger.info("Value username=" + username);
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(this, PasswordsActivity.class);
             i.putExtra(LOGIN_USERNAME,username);
             startActivity(i);
         }
