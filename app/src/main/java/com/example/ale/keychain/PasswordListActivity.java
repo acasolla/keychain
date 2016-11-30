@@ -1,28 +1,22 @@
 package com.example.ale.keychain;
 
-import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.example.ale.keychain.adapter.PasswordCursorAdapter;
 import com.example.ale.keychain.sql.PasswordContract;
@@ -30,8 +24,9 @@ import com.example.ale.keychain.sql.PasswordDbHelper;
 
 import java.util.logging.Logger;
 
-public class PasswordsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
-    private static final Logger logger = Logger.getLogger("Keychain-PasswordsActivity");
+public class PasswordListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+    private static final Logger logger = Logger.getLogger("Keychain-PasswordListActivity");
+    public static final String PASSWORD_SELECTED = "com.example.ale.keychain.PASSWORD_SELECTED";
     private SharedPreferences sharedPref = null;
     private SharedPreferences.Editor editor = null;
     private PasswordDbHelper mDbHelper;
@@ -73,7 +68,7 @@ public class PasswordsActivity extends AppCompatActivity implements LoaderManage
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_passwords);
+        setContentView(R.layout.activity_list_passwords);
         lView = (ListView) findViewById(R.id.list);
         sharedPref = getSharedPreferences(LoginActivity.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
@@ -87,6 +82,7 @@ public class PasswordsActivity extends AppCompatActivity implements LoaderManage
         int[] toViews = {R.id.line_name,R.id.line_name}; // The TextView in simple_list_item_1
        mAdapter = new PasswordCursorAdapter(this,R.layout.password_list_item,c,0);
         lView.setAdapter(mAdapter);
+        lView.setOnItemClickListener(this);
 
     }
 
@@ -110,18 +106,14 @@ public class PasswordsActivity extends AppCompatActivity implements LoaderManage
         logger.info("inserted=" + newRowId);
     }
 
-    @Override
-    public Loader onCreateLoader(int id, Bundle args) {
-        return null;
-    }
 
     @Override
-    public void onLoadFinished(Loader loader, Object data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader loader) {
-
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Cursor c = (Cursor) mAdapter.getItem(i);
+        PasswordBean p = new PasswordBean(c);
+        logger.info("object selected = " + p);
+        Intent intent = new Intent(this,PasswordDetailActivity.class);
+        intent.putExtra(PASSWORD_SELECTED,p);
+        startActivity(intent);
     }
 }

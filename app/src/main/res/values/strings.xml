@@ -6,4 +6,10 @@
     <string name="label_username">Username</string>
     <string name="label_password">Password</string>
     <string name="username_null">Username is mandatory!</string>
+
+    <string name="psw_name">Name</string>
+    <string name="psw_url">Url</string>
+    <string name="psw_username">Username</string>
+    <string name="psw_psw">Password</string>
+    <string name="psw_note">Note</string>
 </resources>

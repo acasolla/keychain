@@ -5,13 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
-import android.view.Gravity;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import java.util.logging.Logger;
 
@@ -33,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         String storedUsername = sharedPref.getString(USERNAME_KEY,null);
         logger.info("storedUSername=" + storedUsername);
         if ( storedUsername != null ){
-            Intent i = new Intent(this,PasswordsActivity.class);
+            Intent i = new Intent(this,PasswordListActivity.class);
             startActivity(i);
         }
     }
@@ -56,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.commit();
 
             logger.info("Value username=" + username);
-            Intent i = new Intent(this, PasswordsActivity.class);
+            Intent i = new Intent(this, PasswordListActivity.class);
             i.putExtra(LOGIN_USERNAME,username);
             startActivity(i);
         }
