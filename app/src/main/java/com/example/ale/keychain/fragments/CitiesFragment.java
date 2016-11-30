@@ -59,7 +59,7 @@ public class CitiesFragment extends ListFragment  implements AdapterView.OnItemC
             t.setText(cities[position]);
         }else {
             Intent i = new Intent(getActivity(), CityActivity.class);
-            i.putExtra("selected.city",cities[position]);
+            i.putExtra(SELECTED_CITY,cities[position]);
             getActivity().startActivity(i);
         }
 
