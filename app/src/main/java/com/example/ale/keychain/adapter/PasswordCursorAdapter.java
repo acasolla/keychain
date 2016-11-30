@@ -7,6 +7,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
 import com.example.ale.keychain.R;
+import com.example.ale.keychain.sql.PasswordContract;
 
 /**
  * Created by ale on 11/29/16.
@@ -20,10 +21,17 @@ public class PasswordCursorAdapter  extends ResourceCursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView name = (TextView) view.findViewById(R.id.line_name);
-        name.setText(cursor.getString(cursor.getColumnIndex("name")));
 
-        TextView phone = (TextView) view.findViewById(R.id.line_username);
-        phone.setText(cursor.getString(cursor.getColumnIndex("username")));
+
+        TextView name = (TextView) view.findViewById(R.id.line_name);
+        name.setText(cursor.getString(cursor.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_NAME)));
+
+        TextView phone = (TextView) view.findViewById(R.id.line_url);
+        phone.setText(cursor.getString(cursor.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_URL)));
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 }

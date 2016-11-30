@@ -9,7 +9,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -27,7 +30,7 @@ import com.example.ale.keychain.sql.PasswordDbHelper;
 
 import java.util.logging.Logger;
 
-public class PasswordsActivity extends AppCompatActivity {
+public class PasswordsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
     private static final Logger logger = Logger.getLogger("Keychain-PasswordsActivity");
     private SharedPreferences sharedPref = null;
     private SharedPreferences.Editor editor = null;
@@ -80,7 +83,7 @@ public class PasswordsActivity extends AppCompatActivity {
 
         Cursor c = mDbHelper.getPasswords(db,"nome1");
 
-        String[] fromColumns = {PasswordContract.PasswordEntry.COLUMN_NAME,PasswordContract.PasswordEntry.COLUMN_USERNAME};
+        String[] fromColumns = {PasswordContract.PasswordEntry.COLUMN_NAME,PasswordContract.PasswordEntry.COLUMN_URL};
         int[] toViews = {R.id.line_name,R.id.line_name}; // The TextView in simple_list_item_1
        mAdapter = new PasswordCursorAdapter(this,R.layout.password_list_item,c,0);
         lView.setAdapter(mAdapter);
@@ -95,10 +98,30 @@ public class PasswordsActivity extends AppCompatActivity {
         values.put(PasswordContract.PasswordEntry.COLUMN_USERNAME, "username1");
         values.put(PasswordContract.PasswordEntry.COLUMN_PASSWORD, "password1");
         values.put(PasswordContract.PasswordEntry.COLUMN_NOTE, "note1");
+        values.put(PasswordContract.PasswordEntry.COLUMN_URL, "http://google.it");
+
 
 // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(PasswordContract.PasswordEntry.TABLE_NAME, null, values);
-
+        lView.destroyDrawingCache();
+        lView.setVisibility(ListView.INVISIBLE);
+        lView.setVisibility(ListView.VISIBLE);
+        ((BaseAdapter) lView.getAdapter()).notifyDataSetChanged();
         logger.info("inserted=" + newRowId);
+    }
+
+    @Override
+    public Loader onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader loader, Object data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader loader) {
+
     }
 }

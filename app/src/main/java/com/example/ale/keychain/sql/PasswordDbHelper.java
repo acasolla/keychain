@@ -17,13 +17,14 @@ public class PasswordDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + PasswordContract.PasswordEntry.TABLE_NAME + " (" +
                     PasswordContract.PasswordEntry._ID + " INTEGER PRIMARY KEY," +
                     PasswordContract.PasswordEntry.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
+                    PasswordContract.PasswordEntry.COLUMN_URL + TEXT_TYPE + COMMA_SEP +
                     PasswordContract.PasswordEntry.COLUMN_USERNAME + TEXT_TYPE + COMMA_SEP +
                     PasswordContract.PasswordEntry.COLUMN_PASSWORD + TEXT_TYPE + COMMA_SEP +
                     PasswordContract.PasswordEntry.COLUMN_NOTE + TEXT_TYPE + " )";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + PasswordContract.PasswordEntry.TABLE_NAME;
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "Password.db";
 
     public PasswordDbHelper(Context context) {

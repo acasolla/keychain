@@ -16,5 +16,5 @@
         </activity>
         <activity android:name=".PasswordsActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

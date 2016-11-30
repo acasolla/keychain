@@ -16,12 +16,14 @@ public class PasswordContract {
     public static class PasswordEntry implements BaseColumns {
         public static final String TABLE_NAME = "password";
         public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_URL = "url";
         public static final String COLUMN_USERNAME = "username";
         public static final String COLUMN_PASSWORD = "password";
         public static final String COLUMN_NOTE = "note";
         public static String[] projection = {
                 PasswordEntry._ID,
                 PasswordEntry.COLUMN_NAME,
+                PasswordEntry.COLUMN_URL,
                 PasswordEntry.COLUMN_USERNAME,
                 PasswordEntry.COLUMN_PASSWORD,
                 PasswordEntry.COLUMN_NOTE
