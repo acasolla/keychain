@@ -13,19 +13,30 @@ import java.io.Serializable;
 public class PasswordBean implements Serializable
 {
 
+    public PasswordBean(){}
     public PasswordBean(Cursor c ){
         this.name = c.getString(c.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_NAME));
         this.url = c.getString(c.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_URL));
         this.username = c.getString(c.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_USERNAME));
         this.password = c.getString(c.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_PASSWORD));
         this.note = c.getString(c.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_NOTE));
-    }
+        this._id = c.getInt(c.getColumnIndex(PasswordContract.PasswordEntry._ID));
 
+    }
+    private int _id;
     private String name;
     private String url;
     private String username;
     private String password;
     private String note;
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
 
     public String getName() {
         return name;

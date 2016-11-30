@@ -26,12 +26,8 @@ public class PasswordCursorAdapter  extends ResourceCursorAdapter {
         TextView name = (TextView) view.findViewById(R.id.line_name);
         name.setText(cursor.getString(cursor.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_NAME)));
 
-        TextView phone = (TextView) view.findViewById(R.id.line_url);
-        phone.setText(cursor.getString(cursor.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_URL)));
+        TextView url = (TextView) view.findViewById(R.id.line_url);
+        url.setText(cursor.getString(cursor.getColumnIndex(PasswordContract.PasswordEntry.COLUMN_URL)));
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
 }

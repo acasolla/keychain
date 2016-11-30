@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,42 +29,10 @@ public class PasswordListActivity extends AppCompatActivity implements AdapterVi
     public static final String PASSWORD_SELECTED = "com.example.ale.keychain.PASSWORD_SELECTED";
     private SharedPreferences sharedPref = null;
     private SharedPreferences.Editor editor = null;
-
     private PasswordDbHelper mDbHelper;
     private SQLiteDatabase db;
     private PasswordCursorAdapter mAdapter;
     private ListView lView;
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_build:
-                logger.info("build");
-                addToDB();
-                return true;
-
-            case R.id.action_logout:
-                logger.info("settings");
-                editor.putString(LoginActivity.USERNAME_KEY,null);
-                editor.commit();
-                Intent i = new Intent(this,LoginActivity.class);
-                startActivity(i);
-
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,21 +44,51 @@ public class PasswordListActivity extends AppCompatActivity implements AdapterVi
         lView = (ListView) findViewById(R.id.list);
         mDbHelper = new PasswordDbHelper(this);
         db = mDbHelper.getWritableDatabase();
-        Cursor c = mDbHelper.getPasswords(db,null);
-        mAdapter = new PasswordCursorAdapter(this,R.layout.password_list_item,c,0);
-        lView.setAdapter(mAdapter);
+
         lView.setOnItemClickListener(this);
 
     }
 
-    private void addToDB(){
-        startDetail(null);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Cursor c = mDbHelper.getPasswords(db,null);
+        mAdapter = new PasswordCursorAdapter(this,R.layout.password_list_item,c,0);
+        lView.setAdapter(mAdapter);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                logger.info("build");
+                startDetail(null);
+                return true;
+            case R.id.action_logout:
+                logger.info("settings");
+                editor.putString(LoginActivity.USERNAME_KEY,null);
+                editor.commit();
+                Intent i = new Intent(this,LoginActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
+
+
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Cursor c = (Cursor) mAdapter.getItem(i);
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Cursor c = (Cursor) mAdapter.getItem(position);
         PasswordBean bean = new PasswordBean(c);
         logger.info("object selected = " + bean);
        startDetail(bean);
@@ -100,4 +99,8 @@ public class PasswordListActivity extends AppCompatActivity implements AdapterVi
         intent.putExtra(PASSWORD_SELECTED,bean);
         startActivity(intent);
     }
+
+
 }
+
+//https://material.io/icons/

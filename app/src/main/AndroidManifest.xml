@@ -14,12 +14,11 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".PasswordListActivity" />
-        <activity android:name=".PasswordDetailActivity"></activity>
+        <activity android:name=".PasswordDetailActivity" android:theme="@style/NoActionbar"></activity>
     </application>
 
 </manifest>

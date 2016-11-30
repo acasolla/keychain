@@ -42,7 +42,7 @@ public class MainActivity extends ListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_build:
+            case R.id.action_add:
                 logger.info("build");
                 addToDB();
                 return true;
