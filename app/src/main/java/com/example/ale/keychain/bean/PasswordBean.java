@@ -1,4 +1,4 @@
-package com.example.ale.keychain;
+package com.example.ale.keychain.bean;
 
 import android.database.Cursor;
 

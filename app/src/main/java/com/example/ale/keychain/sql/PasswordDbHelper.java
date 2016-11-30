@@ -31,6 +31,7 @@ public class PasswordDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(SQL_CREATE_ENTRIES);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -44,8 +45,12 @@ public class PasswordDbHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getPasswords(SQLiteDatabase db,String name){
-        String selection = PasswordContract.PasswordEntry.COLUMN_NAME + " = ?";
-        String[] selectionArgs = { name };
+        String selection = name != null ? PasswordContract.PasswordEntry.COLUMN_NAME + " = ?" : name;
+        String[] selectionArgs = null;
+        if ( name != null ){
+            selectionArgs = new String[1];
+            selectionArgs[0] = name;
+        }
 
 // How you want the results sorted in the resulting Cursor
         String sortOrder =
@@ -55,7 +60,7 @@ public class PasswordDbHelper extends SQLiteOpenHelper {
                 PasswordContract.PasswordEntry.TABLE_NAME,                     // The table to query
                 PasswordContract.PasswordEntry.projection,                               // The columns to return
                 selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
+                selectionArgs,                                // The values for the WHERE clause
                 null,                                     // don't group the rows
                 null,                                     // don't filter by row groups
                 sortOrder                                 // The sort order

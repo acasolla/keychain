@@ -20,6 +20,7 @@ public class PasswordContract {
         public static final String COLUMN_USERNAME = "username";
         public static final String COLUMN_PASSWORD = "password";
         public static final String COLUMN_NOTE = "note";
+
         public static String[] projection = {
                 PasswordEntry._ID,
                 PasswordEntry.COLUMN_NAME,
