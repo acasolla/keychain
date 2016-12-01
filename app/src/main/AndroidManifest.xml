@@ -12,9 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:noHistory="true">
-
-        </activity>
+            android:noHistory="true"></activity>
         <activity android:name=".PasswordListActivity" />
         <activity
             android:name=".PasswordDetailActivity"
@@ -25,7 +23,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 
