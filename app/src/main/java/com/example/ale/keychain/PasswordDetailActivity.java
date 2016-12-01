@@ -32,6 +32,9 @@ public class PasswordDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_detail);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+
         etName = (EditText) findViewById(R.id.psw_name);
         etUrl = (EditText) findViewById(R.id.psw_url);
         etUsername = (EditText) findViewById(R.id.psw_username);
