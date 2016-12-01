@@ -28,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NetworkingActivity extends AppCompatActivity {
@@ -52,14 +53,11 @@ public class NetworkingActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             new CallRestTask().execute(REST_URL_USA,REST_URL_IND);
+
         } else {
             Toast.makeText(this, "You are offline", Toast.LENGTH_SHORT).show();
         }
-
     }
-
-
-
     private class CallRestTask extends AsyncTask<String, String, String> {
         private ProgressDialog progressDialog = new ProgressDialog(NetworkingActivity.this);
 
@@ -67,8 +65,6 @@ public class NetworkingActivity extends AppCompatActivity {
             progressDialog.setMessage("Calling ws..");
             progressDialog.show();
         }
-
-
         @Override
         protected String doInBackground(String... urls) {
             try {
@@ -120,7 +116,6 @@ public class NetworkingActivity extends AppCompatActivity {
 
         }
 
-
         public String makeServiceCall(String reqUrl) {
             String response = null;
             try {
@@ -162,7 +157,5 @@ public class NetworkingActivity extends AppCompatActivity {
             }
             return sb.toString();
         }
-
-
     }
 }
