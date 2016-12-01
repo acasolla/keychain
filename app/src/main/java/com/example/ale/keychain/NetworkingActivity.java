@@ -6,11 +6,13 @@ import android.app.ProgressDialog;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NetworkingActivity extends AppCompatActivity {
+
+    private final static int PICK_CONTACT_REQUEST = 1;
 
     public final static String RESULT_INTENT= "com.example.ale.keychain.RESULT_INTENT";
     private final static String TAG = "NetworkingActivity";
@@ -207,5 +211,42 @@ public class NetworkingActivity extends AppCompatActivity {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 // mId allows you to update the notification later on.
         mNotificationManager.notify(1 , mBuilder.build());
+    }
+
+
+    public void getContacts(View view){
+        Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
+        pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
+        startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG,"onActivityResult");
+        if (requestCode == PICK_CONTACT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // Get the URI that points to the selected contact
+                Uri contactUri = data.getData();
+                // We only need the NUMBER column, because there will be only one row in the result
+                String[] projection = {ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
+
+                // Perform the query on the contact to get the NUMBER column
+                // We don't need a selection or sort order (there's only one result for the given URI)
+                // CAUTION: The query() method should be called from a separate thread to avoid blocking
+                // your app's UI thread. (For simplicity of the sample, this code doesn't do that.)
+                // Consider using CursorLoader to perform the query.
+                Cursor cursor = getContentResolver()
+                        .query(contactUri, projection, null, null, null);
+                cursor.moveToFirst();
+
+                // Retrieve the phone number from the NUMBER column
+                int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                String name = cursor.getString(column);
+                textView.setText("Selected number :" + name);
+                // Log.d(TAG,number);
+                // Do something with the phone number...
+            }
+        }
     }
 }
