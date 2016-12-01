@@ -6,8 +6,10 @@ import android.app.ProgressDialog;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -173,17 +175,22 @@ public class NetworkingActivity extends AppCompatActivity {
 
 
     public void publishNotification(View view) {
-        int n = mId;
-        int id = 1;
+
+        Uri ring = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        long[] pattern = {500,1000,500,1000};
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Network update")
-                        .setContentText(n ++ + " Rest service result is ready!")
+                        .setContentText(" Rest service result is ready!")
+                        .setSound(ring)
+                        .setVibrate(pattern)
                         .setAutoCancel(true);
 // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, NotificationActivity.class);
         resultIntent.putExtra(RESULT_INTENT,restResult);
+
+
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
 // This ensures that navigating backward from the Activity leads out of
@@ -194,14 +201,11 @@ public class NetworkingActivity extends AppCompatActivity {
 // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
+                stackBuilder.getPendingIntent(0,  PendingIntent.FLAG_ONE_SHOT );
         mBuilder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 // mId allows you to update the notification later on.
-        mNotificationManager.notify(id , mBuilder.build());
+        mNotificationManager.notify(1 , mBuilder.build());
     }
 }
