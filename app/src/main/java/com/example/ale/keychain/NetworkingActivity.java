@@ -1,10 +1,15 @@
 package com.example.ale.keychain;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,9 +37,12 @@ import java.util.List;
 
 public class NetworkingActivity extends AppCompatActivity {
 
+    public final static String RESULT_INTENT= "com.example.ale.keychain.RESULT_INTENT";
     private final static String TAG = "NetworkingActivity";
     private final static String REST_URL_USA = "http://services.groupkt.com/state/get/USA/all";
     private final static String REST_URL_IND = "http://services.groupkt.com/state/get/IND/all";
+    private String restResult = null;
+    private int mId = 0;
     TextView textView;
     ListView listView;
 
@@ -42,7 +50,7 @@ public class NetworkingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_networking);
-        listView = (ListView)findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list);
     }
 
 
@@ -51,13 +59,12 @@ public class NetworkingActivity extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new CallRestTask().execute(REST_URL_USA,REST_URL_IND);
+            new CallRestTask().execute(REST_URL_USA, REST_URL_IND);
         } else {
             Toast.makeText(this, "You are offline", Toast.LENGTH_SHORT).show();
         }
 
     }
-
 
 
     private class CallRestTask extends AsyncTask<String, String, String> {
@@ -73,7 +80,7 @@ public class NetworkingActivity extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             try {
                 String result = null;
-                for ( String url :urls ){
+                for (String url : urls) {
                     result = makeServiceCall(url);
                     publishProgress("Parsed url:" + url);
                     Thread.sleep(1000);
@@ -91,11 +98,7 @@ public class NetworkingActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
             progressDialog.dismiss();
             try {
                 JSONObject object = new JSONObject(result);
@@ -113,6 +116,8 @@ public class NetworkingActivity extends AppCompatActivity {
                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(NetworkingActivity.this,
                         android.R.layout.simple_list_item_1, values);
                 listView.setAdapter(adapter);
+                restResult=result;
+                publishNotification(null);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -164,5 +169,39 @@ public class NetworkingActivity extends AppCompatActivity {
         }
 
 
+    }
+
+
+    public void publishNotification(View view) {
+        int n = mId;
+        int id = 1;
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("Network update")
+                        .setContentText(n ++ + " Rest service result is ready!")
+                        .setAutoCancel(true);
+// Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, NotificationActivity.class);
+        resultIntent.putExtra(RESULT_INTENT,restResult);
+// The stack builder object will contain an artificial back stack for the
+// started Activity.
+// This ensures that navigating backward from the Activity leads out of
+// your application to the Home screen.ˇ
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+// Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(NotificationActivity.class);
+// Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
+        mNotificationManager.notify(id , mBuilder.build());
     }
 }

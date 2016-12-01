@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
         <activity android:name=".PasswordListActivity" />
         <activity
             android:name=".PasswordDetailActivity"
@@ -20,9 +20,15 @@
         <activity android:name=".NetworkingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+        <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".NotificationActivity"
+            android:parentActivityName=".NetworkingActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".NetworkingActivity"/>
         </activity>
     </application>
 
