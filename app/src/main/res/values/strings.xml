@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Keychain</string>
+    <string name="app_name">Demo Begear</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="detail_activity">Detail</string>
@@ -12,4 +12,5 @@
     <string name="psw_username">Username</string>
     <string name="psw_psw">Password</string>
     <string name="psw_note">Note</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
