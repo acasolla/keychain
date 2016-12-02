@@ -4,8 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" ></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:allowBackup="true"
         android:icon="@mipmap/key"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -18,15 +24,29 @@
             android:name=".PasswordDetailActivity"
             android:theme="@style/NoActionbar" />
         <activity android:name=".NetworkingActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".NotificationActivity"
-            android:parentActivityName=".NetworkingActivity">
 
         </activity>
+        <activity
+            android:name=".NotificationActivity"
+            android:parentActivityName=".NetworkingActivity"></activity>
+
+
+
+        <activity android:name=".DownloadActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".DownloadReceiver">
+            <intent-filter>
+                <action android:name="com.example.ale.keychain.receiver"></action>
+            </intent-filter>
+        </receiver>
+        <service android:name=".DownloadService"></service>
     </application>
 
 </manifest>
