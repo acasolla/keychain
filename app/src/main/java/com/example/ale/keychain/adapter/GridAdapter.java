@@ -17,32 +17,24 @@ import com.example.ale.keychain.R;
 public class GridAdapter extends BaseAdapter {
     private Context mContext;
     private final String[] web;
-    private final int[] Imageid;
-
+    private final int[] imageId;
     public GridAdapter(Context c,String[] web,int[] Imageid ) {
-        mContext = c;
-        this.Imageid = Imageid;
+        this.mContext = c;
+        this.imageId = Imageid;
         this.web = web;
-    }
-
+    }//https://material.io/icons/
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return web.length;
     }
-
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return null;
     }
-
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return 0;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View grid;
@@ -56,10 +48,10 @@ public class GridAdapter extends BaseAdapter {
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
             ImageView imageView = (ImageView)grid.findViewById(R.id.grid_image);
             textView.setText(web[position]);
-            imageView.setImageResource(Imageid[position]);
-            imageView.setTag(Imageid[position]);
+            imageView.setImageResource(imageId[position]);
+            imageView.setTag(imageId[position]);
         } else {
-            grid = (View) convertView;
+            grid = convertView;
         }
 
         return grid;

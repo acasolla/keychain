@@ -30,13 +30,6 @@
         <activity android:name=".DownloadActivity">
         </activity>
 
-        <receiver android:name=".DownloadReceiver">
-            <intent-filter>
-                <action android:name="com.example.ale.keychain.receiver" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name=".DownloadService" />
 
         <activity android:name=".CameraActivity">
 
@@ -51,6 +44,15 @@
 
 
         </activity>
+
+        <receiver android:name=".DownloadReceiver">
+            <intent-filter>
+                <action android:name="com.example.ale.keychain.receiver" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".DownloadService" />
+
     </application>
 
 </manifest>

@@ -39,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
     private GridView gridView;
     static final String[] names = new String[] {"Camera", "Download", "Keychain", "Networking"};
-    static final int[] images = new int[]{R.mipmap.ic_photo_camera_black_24dp,R.mipmap.ic_file_download_black_24dp,R.mipmap.ic_vpn_key_black_24dp,R.mipmap.ic_settings_ethernet_black_24dp};
+    static final int[] images = new int[]{R.mipmap.ic_photo_camera_black_48dp,
+                                          R.mipmap.ic_file_download_black_48dp,
+                                          R.mipmap.ic_vpn_key_black_48dp,
+                                          R.mipmap.ic_settings_ethernet_black_48dp};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,34 +50,34 @@ public class MainActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.grid);
         GridAdapter adapter = new GridAdapter(MainActivity.this, names, images);
         gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(MainActivity.this, "You Clicked at " +names[+ position], Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
-
 
     }
 
     public void clickIcon(View view){
-
-        Log.d("TAG","Click icon view=" + view.getId());
-        Log.d("TAG","CameraId=" + R.mipmap.ic_photo_camera_black_24dp);
+        Intent i = null;
         final int id = (int) view.getTag();
         switch (id){
-            case R.mipmap.ic_photo_camera_black_24dp:
+            case R.mipmap.ic_photo_camera_black_48dp:
                 Log.d("TAG","Clicked camera");
+                i = new Intent(this,CameraActivity.class);
                 break;
+            case R.mipmap.ic_file_download_black_48dp:
+                Log.d("TAG","Clicked camera");
+                i = new Intent(this,DownloadActivity.class);
+                break;
+            case R.mipmap.ic_settings_ethernet_black_48dp:
+                Log.d("TAG","Clicked camera");
+                i = new Intent(this,NetworkingActivity.class);
+                break;
+            case R.mipmap.ic_vpn_key_black_48dp:
+                Log.d("TAG","Clicked camera");
+                i = new Intent(this,LoginActivity.class);
+                break;
+
 
         }
 
+        startActivity(i);
     }
-
 
 }
