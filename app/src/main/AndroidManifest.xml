@@ -4,11 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.VIBRATE" ></uses-permission>
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -23,30 +23,29 @@
         <activity
             android:name=".PasswordDetailActivity"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".NetworkingActivity">
-
-        </activity>
+        <activity android:name=".NetworkingActivity"></activity>
         <activity
             android:name=".NotificationActivity"
-            android:parentActivityName=".NetworkingActivity"></activity>
-
-
-
+            android:parentActivityName=".NetworkingActivity" />
         <activity android:name=".DownloadActivity">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <receiver android:name=".DownloadReceiver">
             <intent-filter>
-                <action android:name="com.example.ale.keychain.receiver"></action>
+                <action android:name="com.example.ale.keychain.receiver" />
             </intent-filter>
         </receiver>
-        <service android:name=".DownloadService"></service>
+
+        <service android:name=".DownloadService" />
+
+        <activity android:name=".CameraActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
     </application>
 
 </manifest>
