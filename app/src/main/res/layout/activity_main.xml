@@ -1,50 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ale.keychain.MainActivity">
+    tools:context=".MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/first"
-        android:text="first"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:gravity="left"
-        android:background="@drawable/back"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="second"
-        android:layout_toRightOf="@+id/first"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/back"
+    <GridView
+        android:numColumns="auto_fit"
         android:gravity="center"
+        android:columnWidth="100dp"
+        android:stretchMode="columnWidth"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/grid"
         />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="center"
-        android:id="@+id/center"
-        android:layout_below="@+id/first"
-        android:layout_above="@+id/bottom"
-        android:background="@drawable/rectangle"
-        android:gravity="center"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottom"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:text="bottom"/>
 
-</RelativeLayout>
+</LinearLayout>

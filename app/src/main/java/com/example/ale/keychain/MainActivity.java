@@ -12,102 +12,69 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ale.keychain.adapter.GridAdapter;
 import com.example.ale.keychain.sql.PasswordContract;
 import com.example.ale.keychain.sql.PasswordDbHelper;
 
 import java.util.logging.Logger;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends AppCompatActivity {
     private static final Logger logger = Logger.getLogger("Keychain-MainActivity");
-    private SharedPreferences sharedPref = null;
-    private SharedPreferences.Editor editor = null;
-    private PasswordDbHelper mDbHelper;
-    private SQLiteDatabase db;
-    private SimpleCursorAdapter mAdapter;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                logger.info("build");
-                addToDB();
-                return true;
 
-            case R.id.action_logout:
-                logger.info("settings");
-                editor.putString(LoginActivity.USERNAME_KEY,null);
-                editor.commit();
-                Intent i = new Intent(this,LoginActivity.class);
-                startActivity(i);
-
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
-
+    private GridView gridView;
+    static final String[] names = new String[] {"Camera", "Download", "Keychain", "Networking"};
+    static final int[] images = new int[]{R.mipmap.ic_photo_camera_black_24dp,R.mipmap.ic_file_download_black_24dp,R.mipmap.ic_vpn_key_black_24dp,R.mipmap.ic_settings_ethernet_black_24dp};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sharedPref = getSharedPreferences(LoginActivity.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
-        editor = sharedPref.edit();
-        mDbHelper = new PasswordDbHelper(this);
+        gridView = (GridView) findViewById(R.id.grid);
+        GridAdapter adapter = new GridAdapter(MainActivity.this, names, images);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        db = mDbHelper.getWritableDatabase();
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(MainActivity.this, "You Clicked at " +names[+ position], Toast.LENGTH_SHORT).show();
 
-        Cursor c = mDbHelper.getPasswords(db,"nome1");
-
-        String[] fromColumns = {PasswordContract.PasswordEntry.COLUMN_NAME};
-        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
-       mAdapter = new SimpleCursorAdapter(this,
-               android.R.layout.simple_list_item_1, c,
-               fromColumns, toViews, 0);
+            }
+        });
 
 
-        String username = sharedPref.getString(LoginActivity.USERNAME_KEY,null);
-        if ( username == null ) {
-            Intent i = getIntent();
-            username = i.getStringExtra(LoginActivity.LOGIN_USERNAME);
-            logger.info("username from LoginActivity=" + username);
+
+
+    }
+
+    public void clickIcon(View view){
+
+        Log.d("TAG","Click icon view=" + view.getId());
+        Log.d("TAG","CameraId=" + R.mipmap.ic_photo_camera_black_24dp);
+        final int id = (int) view.getTag();
+        switch (id){
+            case R.mipmap.ic_photo_camera_black_24dp:
+                Log.d("TAG","Clicked camera");
+                break;
+
         }
 
-        TextView center = (TextView) findViewById(R.id.center);
-        center.setText(username);
-
-
     }
 
-    private void addToDB(){
 
-// Create a new map of values, where column names are the keys
-        ContentValues values = new ContentValues();
-        values.put(PasswordContract.PasswordEntry.COLUMN_NAME, "nome1");
-        values.put(PasswordContract.PasswordEntry.COLUMN_USERNAME, "username1");
-        values.put(PasswordContract.PasswordEntry.COLUMN_PASSWORD, "password1");
-        values.put(PasswordContract.PasswordEntry.COLUMN_NOTE, "note1");
-
-// Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(PasswordContract.PasswordEntry.TABLE_NAME, null, values);
-
-        logger.info("inserted=" + newRowId);
-    }
 }

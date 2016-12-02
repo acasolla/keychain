@@ -39,6 +39,11 @@
         <service android:name=".DownloadService" />
 
         <activity android:name=".CameraActivity">
+
+
+        </activity>
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
