@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        logger.info("onCreate");
 
     }
 
@@ -25,16 +28,42 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this,DisplayMessageActivity.class);
         EditText et = (EditText) findViewById(R.id.edit_message);
         String message = et.getText().toString();
-        logger.info("message=" + et.getText());
+        logger.info("starting detail activity with message : " + et.getText());
         i.putExtra(EXTRA_MESSAGE,message);
         startActivity(i);
-        logger.info("starting activity");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected void onStart() {
         super.onStart();
         logger.info("onStart");
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        logger.info("onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        logger.info("onPause");
     }
 
     @Override
@@ -55,17 +84,7 @@ public class MainActivity extends AppCompatActivity {
         logger.info("onBackPressed");
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        logger.info("onPause");
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        logger.info("onResume");
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
