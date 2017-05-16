@@ -10,16 +10,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".CityActivity"
-            android:label="@string/title_activity_city"/>
+            android:label="@string/title_activity_city" />
         <activity
-
             android:name=".ListCityActivity"
             android:label="@string/title_activity_list_city">
+
+        </activity>
+        <activity android:name=".WidgetsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 
