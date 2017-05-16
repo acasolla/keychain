@@ -53,7 +53,8 @@ public class CitiesFragment extends ListFragment  implements AdapterView.OnItemC
    //     Snackbar.make(view, "Selected city: " + cities[position], Snackbar.LENGTH_LONG)
     //            .setAction("Action", null).show();
     //    Intent i = new Intent(this,CitiesFragment.class);
-        if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ){
+        if ( getResources().getConfiguration().orientation ==
+                Configuration.ORIENTATION_LANDSCAPE ){
             View v = getActivity().findViewById(R.id.city_fragment);
             TextView t = (TextView) v.findViewById(R.id.city);
             t.setText(cities[position]);
