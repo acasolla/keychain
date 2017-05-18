@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".PasswordListActivity" />
-        <activity android:name=".PasswordDetailActivity" android:theme="@style/NoActionbar"></activity>
+        <activity android:name=".PasswordDetailActivity"></activity>
     </application>
 
 </manifest>

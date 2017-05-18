@@ -33,31 +33,29 @@ public class PasswordListActivity extends AppCompatActivity implements AdapterVi
     private SQLiteDatabase db;
     private PasswordCursorAdapter mAdapter;
     private ListView lView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_passwords);
         sharedPref = getSharedPreferences(LoginActivity.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
-
         lView = (ListView) findViewById(R.id.list);
         mDbHelper = new PasswordDbHelper(this);
         db = mDbHelper.getWritableDatabase();
-
         lView.setOnItemClickListener(this);
-
     }
-
     @Override
     protected void onStart() {
         super.onStart();
         Cursor c = mDbHelper.getPasswords(db,null);
         mAdapter = new PasswordCursorAdapter(this,R.layout.password_list_item,c,0);
         lView.setAdapter(mAdapter);
-
     }
-
+    private void startDetail(PasswordBean bean){
+        Intent intent = new Intent(this,PasswordDetailActivity.class);
+        intent.putExtra(PASSWORD_SELECTED,bean);
+        startActivity(intent);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -83,9 +81,6 @@ public class PasswordListActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-
-
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Cursor c = (Cursor) mAdapter.getItem(position);
@@ -94,13 +89,4 @@ public class PasswordListActivity extends AppCompatActivity implements AdapterVi
        startDetail(bean);
     }
 
-    private void startDetail(PasswordBean bean){
-        Intent intent = new Intent(this,PasswordDetailActivity.class);
-        intent.putExtra(PASSWORD_SELECTED,bean);
-        startActivity(intent);
-    }
-
-
 }
-
-//https://material.io/icons/
