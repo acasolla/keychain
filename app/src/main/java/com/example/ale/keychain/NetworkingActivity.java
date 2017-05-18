@@ -45,7 +45,7 @@ public class NetworkingActivity extends AppCompatActivity {
     private final static String REST_URL_IND = "http://services.groupkt.com/state/get/IND/all";
     ListView listView;
 
-    //private long [] patternSW ={0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500};
+    private long [] patternSW ={0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500};
     private long[] pattern = {500,1000,500,1000};
 
 
@@ -118,8 +118,9 @@ public class NetworkingActivity extends AppCompatActivity {
                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(NetworkingActivity.this,
                         android.R.layout.simple_list_item_1, values);
                 listView.setAdapter(adapter);
+                Thread.sleep(2000);
                 publishNotification("Message is ready, entries=" + values.size(),result);
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -176,7 +177,7 @@ public class NetworkingActivity extends AppCompatActivity {
                         .setContentTitle("Network update")
                         .setContentText(msg)
                         .setSound(ring)
-                        .setVibrate(pattern)
+                        .setVibrate(patternSW)
                         .setAutoCancel(true);
 // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, NotificationActivity.class);
