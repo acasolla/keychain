@@ -43,10 +43,11 @@ public class NetworkingActivity extends AppCompatActivity {
     private final static String TAG = "NetworkingActivity";
     private final static String REST_URL_USA = "http://services.groupkt.com/state/get/USA/all";
     private final static String REST_URL_IND = "http://services.groupkt.com/state/get/IND/all";
-    private String restResult = null;
-    private int mId = 0;
-    TextView textView;
     ListView listView;
+
+    //private long [] patternSW ={0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500};
+    private long[] pattern = {500,1000,500,1000};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,6 @@ public class NetworkingActivity extends AppCompatActivity {
         }
 
     }
-
 
     private class CallRestTask extends AsyncTask<String, String, String> {
         private ProgressDialog progressDialog = new ProgressDialog(NetworkingActivity.this);
@@ -118,8 +118,7 @@ public class NetworkingActivity extends AppCompatActivity {
                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(NetworkingActivity.this,
                         android.R.layout.simple_list_item_1, values);
                 listView.setAdapter(adapter);
-                restResult=result;
-                publishNotification(null);
+                publishNotification("Message is ready, entries=" + values.size(),result);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -137,12 +136,6 @@ public class NetworkingActivity extends AppCompatActivity {
                 // read the response
                 InputStream in = new BufferedInputStream(conn.getInputStream());
                 response = convertStreamToString(in);
-            } catch (MalformedURLException e) {
-                Log.e(TAG, "MalformedURLException: " + e.getMessage());
-            } catch (ProtocolException e) {
-                Log.e(TAG, "ProtocolException: " + e.getMessage());
-            } catch (IOException e) {
-                Log.e(TAG, "IOException: " + e.getMessage());
             } catch (Exception e) {
                 Log.e(TAG, "Exception: " + e.getMessage());
             }
@@ -174,21 +167,20 @@ public class NetworkingActivity extends AppCompatActivity {
     }
 
 
-    public void publishNotification(View view) {
+    public void publishNotification(String msg,String result) {
 
         Uri ring = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        long[] pattern = {500,1000,500,1000};
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Network update")
-                        .setContentText(" Rest service result is ready!")
+                        .setContentText(msg)
                         .setSound(ring)
                         .setVibrate(pattern)
                         .setAutoCancel(true);
 // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, NotificationActivity.class);
-        resultIntent.putExtra(RESULT_INTENT,restResult);
+        resultIntent.putExtra(RESULT_INTENT,result);
 
 
 // The stack builder object will contain an artificial back stack for the
