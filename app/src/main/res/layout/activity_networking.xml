@@ -10,11 +10,9 @@
         android:layout_height="wrap_content"
         android:text="HttpCall"
         android:id="@+id/btn" android:onClick="performCall"/>
-    <TextView  android:layout_width="wrap_content" android:id="@+id/tv"
-        android:layout_height="wrap_content" android:layout_below="@+id/btn"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:id="@+id/list"
-        android:layout_below="@+id/tv"></ListView>
+        android:layout_below="@+id/btn"></ListView>
 
 </RelativeLayout>

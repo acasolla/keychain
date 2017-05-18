@@ -35,40 +35,39 @@ public class NetworkingActivity extends AppCompatActivity {
 
     private final static String TAG = "NetworkingActivity";
     private final static String REST_URL_USA = "http://services.groupkt.com/state/get/USA/all";
-    private final static String REST_URL_IND = "http://services.groupkt.com/state/get/IND/all";
-    TextView textView;
     ListView listView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_networking);
         listView = (ListView)findViewById(R.id.list);
     }
-
-
     public void performCall(View view) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new CallRestTask().execute(REST_URL_USA,REST_URL_IND);
-
+            new CallRestTask().execute(REST_URL_USA);
         } else {
             Toast.makeText(this, "You are offline", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
     private class CallRestTask extends AsyncTask<String, String, String> {
         private ProgressDialog progressDialog = new ProgressDialog(NetworkingActivity.this);
 
         protected void onPreExecute() {
             progressDialog.setMessage("Calling ws..");
             progressDialog.show();
+
         }
         @Override
         protected String doInBackground(String... urls) {
             try {
                 String result = null;
+                Thread.sleep(1000);
                 for ( String url :urls ){
                     result = makeServiceCall(url);
                     publishProgress("Parsed url:" + url);
@@ -92,6 +91,7 @@ public class NetworkingActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             progressDialog.dismiss();
             try {
                 JSONObject object = new JSONObject(result);
@@ -125,12 +125,6 @@ public class NetworkingActivity extends AppCompatActivity {
                 // read the response
                 InputStream in = new BufferedInputStream(conn.getInputStream());
                 response = convertStreamToString(in);
-            } catch (MalformedURLException e) {
-                Log.e(TAG, "MalformedURLException: " + e.getMessage());
-            } catch (ProtocolException e) {
-                Log.e(TAG, "ProtocolException: " + e.getMessage());
-            } catch (IOException e) {
-                Log.e(TAG, "IOException: " + e.getMessage());
             } catch (Exception e) {
                 Log.e(TAG, "Exception: " + e.getMessage());
             }
